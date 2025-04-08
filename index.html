@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Magic Animated Counter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #4695C6, #6BA552);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    .counter-wrapper {
+      position: relative;
+    }
+
+    .counter-box {
+      position: relative;
+      padding: 60px 100px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      color: #fff;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 5px;
+      color: white;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    .text {
+      display: inline-block;
+      animation: wipeIn 0.6s ease forwards;
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    .cursor {
+      margin-left: 10px;
+      animation: blink 1s step-start infinite;
+      font-weight: 100;
+      color: #ffffff88;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-top: 15px;
+      letter-spacing: 1px;
+      color: #ffffffcc;
+    }
+
+    /* Cursor blink */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Number slide in wipe effect */
+    @keyframes wipeIn {
+      0% {
+        transform: translateY(100%) scale(0.5) rotateX(90deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0) scale(1) rotateX(0deg);
+        opacity: 1;
+      }
+    }
+
+    /* Glow border animation */
+    .counter-box::before {
+      content: "";
+      position: absolute;
+      top: -4px; left: -4px;
+      width: calc(100% + 8px);
+      height: calc(100% + 8px);
+      border-radius: 25px;
+      background: conic-gradient(from 0deg, #6BA552, #4695C6, #6BA552);
+      animation: rotateGlow 4s linear infinite;
+      z-index: -1;
+      filter: blur(10px);
+    }
+
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+      50% { box-shadow: 0 0 40px rgba(255,255,255,0.3); }
+    }
+  </style>
+</head>
+<body>
+  <div class="counter-wrapper">
+    <div class="counter-box" id="box">
+      <h1 id="counter"><span class="text">1</span><span class="cursor">|</span></h1>
+      <p>ASHIKUR RAHMAN</p>
+      <!-- <p>Happy Clients</p> -->
+    </div>
+  </div>
+
+  <script>
+    let count = 1;
+    const counterEl = document.getElementById("counter");
+
+    setInterval(() => {
+      count++;
+
+      // Create animated number
+      const newNumber = document.createElement("span");
+      newNumber.className = "text";
+      newNumber.textContent = count;
+
+      // Clear previous and add new
+      counterEl.innerHTML = '';
+      counterEl.appendChild(newNumber);
+
+      // Add cursor again
+      const cursor = document.createElement("span");
+      cursor.className = "cursor";
+      cursor.textContent = "|";
+      counterEl.appendChild(cursor);
+
+    }, 1000);
+  </script>
+</body>
+</html>
